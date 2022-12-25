@@ -35,7 +35,7 @@
               <td><%= item.tanggal_pengembalian.toLocaleString('id-ID').split(" ")[0] %></td>
               <td><%= item.status_peminjaman %></td>
               <td>
-                  <button><a href="/update-peminjaman/<%= item.id %>" data-id="<%= item.id %>">Edit</a></button>
+                  <button><a href="/update-peminjaman/<%= item.id %>" data-id="<%= item.id %>">Update Status</a></button>
                   <button><a href="/delete-peminjaman/<%= item.id %>" data-id="<%= item.id %>">Delete</a></button>
               </td>
           </tr>

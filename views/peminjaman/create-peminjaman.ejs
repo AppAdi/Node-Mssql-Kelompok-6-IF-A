@@ -14,13 +14,13 @@
     <label for="id_anggota">Anggota : </label>
     <select name="id_anggota" id="id_anggota">
       <% listAnggota.forEach((item)=>{ %>
-      <option value="<%= item.id %>">"<%= item.nama_lengkap %>"</option>
+      <option value="<%= item.id %>"><%= item.nama_lengkap %></option>
       <%}) %>
     </select>
     <label for="id_buku">Buku : </label>
     <select name="id_buku" id="id_buku">
       <% listBuku.forEach((item)=>{ %>
-      <option value="<%= item.id %>">"<%= item.judul_buku %>"</option>
+      <option value="<%= item.id %>"><%= item.judul_buku %></option>
       <%}) %>
     </select>
     <label for="tanggal_pinjam">Masukkan Tanggal Pinjam : </label>

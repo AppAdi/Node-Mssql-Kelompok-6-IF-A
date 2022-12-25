@@ -19,6 +19,7 @@ app.get('/peminjaman', (req,res) => {
   sql.connect(config,function(){
     var request = new sql.Request();
     request.query('select peminjaman.id, anggota.nama_lengkap, buku.judul_buku, peminjaman.tanggal_peminjaman, peminjaman.tanggal_pengembalian, peminjaman.status_peminjaman from peminjaman inner join anggota on peminjaman.id_anggota = anggota.id inner join buku on peminjaman.id_buku = buku.id', function (err, dataPeminjaman){
+      console.log(dataPeminjaman.recordset)
       res.render('peminjaman/index-peminjaman.ejs',{
         listPeminjaman: dataPeminjaman.recordset,
       });
