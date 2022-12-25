@@ -29,7 +29,7 @@ npm start
 -- Connect <br>
 `docker exec -it mssqldb "bash"`<br><br>
 -- SQLCMD <br>
-`/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "b@s1sDATA"<br>`
+`/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "b@s1sDATA"`
 
 # Endpoint
 Contoh penerapan endpoint pada aplikasi
@@ -55,44 +55,32 @@ const config = {
 
 ## Create
 ```
-app.get('/create-peminjaman',(req,res)=>{
+app.post("/save-buku", function(req, res){
+  let {
+    judul_buku,
+    pengarang,
+    jumlah_halaman,
+    sinopsis,
+  } = req.body;
+
   sql.connect(config,function(){
-    async.parallel([
-      function(callback){
-        var request = new sql.Request();
-        request.query('select id,nama_lengkap from anggota', function (err, dataAnggota) {
-            if (err) {return callback(err);}
-            return callback(null, dataAnggota);
-        });
-      },function(callback){
-        var request = new sql.Request();
-        request.query('select id,judul_buku from buku', function (err, dataBuku) {
-            if (err) {return callback(err);}
-            return callback(null, dataBuku);
-        });
-      }
-    ], function(error,callbackResults){
-      if(error){
-        console.log(error);
-      }else{
-        res.render('peminjaman/create-peminjaman.ejs',{
-          listAnggota:callbackResults[0].recordset,
-          listBuku:callbackResults[1].recordset,
-        });
-      }
-    });
+    var request = new sql.Request();
+    request.query(`INSERT INTO buku (judul_buku, pengarang, jumlah_halaman, sinopsis) VALUES ('${judul_buku}', '${pengarang}', '${jumlah_halaman}', '${sinopsis}')`, function (err){
+      if (err) console.log(err);
+      res.redirect('/buku');
+    })
   })
 });
 ```
 
 ### Read
 ```
-app.get('/peminjaman', (req,res) => {
+app.get('/buku', (req,res) => {
   sql.connect(config,function(){
     var request = new sql.Request();
-    request.query('select peminjaman.id, anggota.nama_lengkap, buku.judul_buku, peminjaman.tanggal_peminjaman, peminjaman.tanggal_pengembalian, peminjaman.status_peminjaman from peminjaman inner join anggota on peminjaman.id_anggota = anggota.id inner join buku on peminjaman.id_buku = buku.id', function (err, dataPeminjaman){
-      res.render('peminjaman/index-peminjaman.ejs',{
-        listPeminjaman: dataPeminjaman.recordset,
+    request.query('select buku.id, buku.judul_buku, buku.pengarang, buku.jumlah_halaman, buku.sinopsis from buku', function (err, dataBuku){
+      res.render('buku/index-buku.ejs',{
+        listBuku: dataBuku.recordset,
       });
     })
   })
@@ -101,13 +89,19 @@ app.get('/peminjaman', (req,res) => {
 
 ## Update
 ```
-app.get('/update-peminjaman/:id', (req,res)=>{
-  let id = req.params.id;
-  console.log(id);
+app.post("/update-buku/", function(req, res){
+  let {
+    id,
+    judul_buku,
+    pengarang,
+    jumlah_halaman,
+    sinopsis
+  } = req.body;
+
   sql.connect(config,function(){
     var request = new sql.Request();
-    request.query("UPDATE peminjaman set status_peminjaman = 'selesai' WHERE id="+id+"", function (err, dataPeminjaman){
-      res.redirect('/peminjaman');
+    request.query("UPDATE buku SET judul_buku = '"+judul_buku+"', pengarang = '"+pengarang+"', jumlah_halaman = '"+jumlah_halaman+"', sinopsis = '"+sinopsis+"' WHERE id="+id+";", function (err, dataBuku){
+      res.redirect('/buku');
     })
   })
 });
@@ -115,13 +109,13 @@ app.get('/update-peminjaman/:id', (req,res)=>{
 
 ## Delete
 ```
-app.get('/delete-peminjaman/:id', (req,res)=>{
+app.get('/delete-buku/:id', (req,res)=>{
   let id = req.params.id;
   console.log(id);
   sql.connect(config,function(){
     var request = new sql.Request();
-    request.query("DELETE FROM peminjaman WHERE id="+id+"", function (err, dataPeminjaman){
-      res.redirect('/peminjaman');
+    request.query("DELETE FROM buku WHERE id="+id+"", function (err, dataBuku){
+      res.redirect('/buku');
     })
   })
 });
