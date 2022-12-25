@@ -26,6 +26,18 @@ app.get('/peminjaman', (req,res) => {
   })
 });
 
+app.get('/anggota', (req,res) => {
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query('select * from anggota', function (err, dataAnggota){
+      // console.log(dataAnggota.recordset);
+      res.render('anggota/index-anggota.ejs',{
+        listAnggota: dataAnggota.recordset,
+      });
+    })
+  })
+});
+
 app.get('/update-peminjaman/:id', (req,res)=>{
   let id = req.params.id;
   console.log(id);
@@ -37,6 +49,18 @@ app.get('/update-peminjaman/:id', (req,res)=>{
   })
 });
 
+app.get('/update-anggota/:id', (req,res)=>{
+  let id = req.params.id;
+  console.log(id);
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query("UPDATE anggota set status_anggota = 'selesai' WHERE id="+id+"", function (err, dataAnggota){
+      res.render('anggota/update-anggota.ejs');
+    })
+  })
+});
+
+
 app.get('/delete-peminjaman/:id', (req,res)=>{
   let id = req.params.id;
   console.log(id);
@@ -44,6 +68,17 @@ app.get('/delete-peminjaman/:id', (req,res)=>{
     var request = new sql.Request();
     request.query("DELETE FROM peminjaman WHERE id="+id+"", function (err, dataPeminjaman){
       res.redirect('/peminjaman');
+    })
+  })
+});
+
+app.get('/delete-anggota/:id', (req,res)=>{
+  let id = req.params.id;
+  console.log(id);
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query("DELETE FROM anggota WHERE id="+id+"", function (err, dataAnggota){
+      res.redirect('/anggota');
     })
   })
 });
@@ -77,6 +112,10 @@ app.get('/create-peminjaman',(req,res)=>{
   })
 });
 
+app.get('/create-anggota',(req,res)=>{
+  res.render('anggota/create-anggota.ejs');
+});
+
 app.post("/save-peminjaman", function(req, res){
   let {
     id_anggota,
@@ -91,6 +130,24 @@ app.post("/save-peminjaman", function(req, res){
     request.query(`INSERT INTO peminjaman (id_anggota, id_buku, tanggal_peminjaman, tanggal_pengembalian, status_peminjaman) VALUES (${id_anggota}, ${id_buku}, '${tanggal_pinjam}', '${tanggal_kembali}', 'aktif')`, function (err){
       if (err) console.log(err);
       res.redirect('/peminjaman');
+    })
+  })
+    
+});
+
+app.post("/save-anggota", function(req, res){
+  let {
+    nama_lengkap,
+    alamat,
+    no_hp,
+  } = req.body;
+
+  var statusp = 'aktif';
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query(`INSERT INTO anggota (nama_lengkap, alamat, no_hp) VALUES ('${nama_lengkap}', '${alamat}', ${no_hp})`, function (err){
+      if (err) console.log(err);
+      res.redirect('/anggota');
     })
   })
     

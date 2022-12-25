@@ -1,0 +1,115 @@
+h1 {
+  font-size: 30px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: left;
+  margin-top: 120px;
+  margin-bottom: 15px;
+}
+
+body {
+  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+  background: linear-gradient(to right, #25c481, #25b7c4);
+  font-family: "Poppins";
+  display: grid;
+  place-items: center;
+}
+
+.container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px;
+  gap: 20px;
+  width: 350px;
+  height: 405px;
+  background: #ffffff94;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.tambah {
+  position: relative;
+  margin-left: 60px;
+  margin-top: 40px;
+  background: #25c481;
+  box-shadow: 0px 4px 4px rgba(153, 153, 153, 0.966);
+  border-radius: 20px;
+  width: 200px;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: #ffffff;
+}
+.con {
+  margin-left: 20px;
+}
+
+.nm {
+  color: #009292;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.nt {
+    margin-top: 30px;
+  color: #009292;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.nr{
+    margin-top: 30px;
+    color: #009292;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.inpn {
+  margin-top: -10px;
+  width: 300px;
+  height: 30px;
+  color: #1c9261;
+  background: #e4e4e4;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  padding-left: 10px;
+  border-color: white;
+}
+
+.inpt {
+  margin-top: -20px;
+  width: 300px;
+  height: 30px;
+  color: #1c9261;
+  background: #e4e4e4;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  padding-left: 10px;
+  border-color: white;
+}
+
+.inpr {
+  margin-top: -20px;
+  width: 300px;
+  height: 30px;
+  color: #1c9261;
+  background: #e4e4e4;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  padding-left: 10px;
+  border-color: white;
+}
