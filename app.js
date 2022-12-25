@@ -93,15 +93,95 @@ app.post("/save-peminjaman", function(req, res){
       res.redirect('/peminjaman');
     })
   })
-    
+
 });
 
-    
+app.get('/buku', (req,res) => {
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query('select buku.id, buku.judul_buku, buku.pengarang, buku.jumlah_halaman, buku.sinopsis from buku', function (err, dataBuku){
+      res.render('buku/index-buku.ejs',{
+        listBuku: dataBuku.recordset,
+      });
+    })
+  })
+});
 
-    
+app.get('/create-buku',(req,res)=>{
+  sql.connect(config,function(){
+    async.parallel([], 
+      function(error,callbackResults){
+      if(error){
+        console.log(error);
+      }else{
+        res.render('buku/create-buku.ejs',{
+        });
+      }
+    });
+  })
+});
 
+app.post("/save-buku", function(req, res){
+  let {
+    judul_buku,
+    pengarang,
+    jumlah_halaman,
+    sinopsis,
+  } = req.body;
 
-app.listen(5000, function () {
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query(`INSERT INTO buku (judul_buku, pengarang, jumlah_halaman, sinopsis) VALUES ('${judul_buku}', '${pengarang}', '${jumlah_halaman}', '${sinopsis}')`, function (err){
+      if (err) console.log(err);
+      res.redirect('/buku');
+    })
+  })
+});
+
+app.get('/edit-buku/:id',(req,res)=>{
+  let id = req.params.id;
+  console.log(id);
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query('select buku.judul_buku, buku.pengarang, buku.jumlah_halaman, buku.sinopsis from buku where id= '+id+'', function (err, dataBuku){
+      res.render('buku/edit-buku.ejs',{
+        listBuku: dataBuku.recordset,
+      });
+    })
+  })
+});
+
+app.post("/update-buku/:id", function(req, res){
+  let {
+    judul_buku,
+    pengarang,
+    jumlah_halaman,
+    sinopsis,
+  } = req.body;
+
+  let id = req.params.id;
+  console.log(id);
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query("UPDATE buku SET judul_buku = " +judul_buku+ ", pengarang = " +pengarang+", jumlah_halaman = "+jumlah_halaman+", sinopsis = "+sinopsis+" WHERE id="+id+"", function (err, dataBuku){
+      if (err) console.log(err);
+      res.redirect('/buku');
+    })
+  })
+});
+
+app.get('/delete-buku/:id', (req,res)=>{
+  let id = req.params.id;
+  console.log(id);
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query("DELETE FROM buku WHERE id="+id+"", function (err, dataBuku){
+      res.redirect('/buku');
+    })
+  })
+});
+
+app.listen(5000, function ()  {
     console.log('Server is running..');
 });
 

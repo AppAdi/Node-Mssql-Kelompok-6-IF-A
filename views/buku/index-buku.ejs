@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./css/index.css">
+  <title>MSSQL</title>
+</head>
+<body>
+  <h1 font-sans>Buku</h1>
+  <button class="add-button"><a href="/create-buku">Tambah Buku</a></button>
+
+  <div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+        <tr>
+          <th>No. </th>
+          <th>Judul Buku</th>
+          <th>Pengarang</th>
+          <th>Jumlah Halaman</th>
+          <th>Sinopsis</th>
+          <th>Aksi</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tr>
+        <% listBuku.forEach((item,index)=>{ %>
+          <tr>
+              <th scope="row"><%= index+1 %></th>
+              <td><%= item.judul_buku %></td>
+              <td><%= item.pengarang %></td>
+              <td><%= item.jumlah_halaman %></td>
+              <td><div class="sinopsis"><%= item.sinopsis %></div></td>
+              <td>
+                  <button><a href="/edit-buku/<%= item.id %>" data-id="<%= item.id %>">Edit</a></button>
+                  <button><a href="/delete-buku/<%= item.id %>" data-id="<%= item.id %>">Delete</a></button>
+              </td>
+          </tr>
+        <%}) %>
+        <tbody>
+    </table>
+</div>
+</body>
+</html>

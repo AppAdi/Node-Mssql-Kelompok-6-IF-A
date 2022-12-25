@@ -4,35 +4,44 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./css/index.css">
   <title>MSSQL</title>
 </head>
 <body>
-  <h1>Peminjaman Buku</h1>
-  <a href="/create-peminjaman">Buat Peminjaman</a>
-  <table>
-    <tr>
-      <th>No. </th>
-      <th>Nama Peminjam</th>
-      <th>Nama Buku</th>
-      <th>Tanggal Peminjaman</th>
-      <th>Tanggal Pengembalian</th>
-      <th>Status</th>
-      <th>Aksi</th>
-    </tr>
-    <% listPeminjaman.forEach((item,index)=>{ %>
-      <tr>
-          <th scope="row"><%= index+1 %></th>
-          <td><%= item.nama_lengkap %></td>
-          <td><%= item.judul_buku %></td>
-          <td><%= item.tanggal_peminjaman.toLocaleString('id-ID').split(" ")[0] %></td>
-          <td><%= item.tanggal_pengembalian.toLocaleString('id-ID').split(" ")[0] %></td>
-          <td><%= item.status_peminjaman %></td>
-          <td>
-              <a href="/update-peminjaman/<%= item.id %>" data-id="<%= item.id %>">Edit</a>
-              <a href="/delete-peminjaman/<%= item.id %>" data-id="<%= item.id %>">Delete</a>
-          </td>
-      </tr>
-    <%}) %>
-  </table>
+  <h1 font-sans>Peminjaman Buku</h1>
+  <button class="add-button"><a href="/create-peminjaman">Tambah Peminjaman</a></button>
+
+  <div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+        <tr>
+          <th>No. </th>
+          <th>Nama Peminjam</th>
+          <th>Nama Buku</th>
+          <th>Tanggal Peminjaman</th>
+          <th>Tanggal Pengembalian</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tr>
+        <% listPeminjaman.forEach((item,index)=>{ %>
+          <tr>
+              <th scope="row"><%= index+1 %></th>
+              <td><%= item.nama_lengkap %></td>
+              <td><%= item.judul_buku %></td>
+              <td><%= item.tanggal_peminjaman.toLocaleString('id-ID').split(" ")[0] %></td>
+              <td><%= item.tanggal_pengembalian.toLocaleString('id-ID').split(" ")[0] %></td>
+              <td><%= item.status_peminjaman %></td>
+              <td>
+                  <button><a href="/update-peminjaman/<%= item.id %>" data-id="<%= item.id %>">Edit</a></button>
+                  <button><a href="/delete-peminjaman/<%= item.id %>" data-id="<%= item.id %>">Delete</a></button>
+              </td>
+          </tr>
+        <%}) %>
+        <tbody>
+    </table>
+</div>
 </body>
 </html>
