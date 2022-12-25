@@ -140,10 +140,9 @@ app.post("/save-buku", function(req, res){
 
 app.get('/edit-buku/:id',(req,res)=>{
   let id = req.params.id;
-  console.log(id);
   sql.connect(config,function(){
     var request = new sql.Request();
-    request.query('select buku.judul_buku, buku.pengarang, buku.jumlah_halaman, buku.sinopsis from buku where id= '+id+'', function (err, dataBuku){
+    request.query('select buku.id, buku.judul_buku, buku.pengarang, buku.jumlah_halaman, buku.sinopsis from buku where id= '+id+'', function (err, dataBuku){
       res.render('buku/edit-buku.ejs',{
         listBuku: dataBuku.recordset,
       });
@@ -151,23 +150,38 @@ app.get('/edit-buku/:id',(req,res)=>{
   })
 });
 
-app.post("/update-buku/:id", function(req, res){
+app.post("/update-buku/", function(req, res){
   let {
+    id,
     judul_buku,
     pengarang,
     jumlah_halaman,
-    sinopsis,
+    sinopsis
   } = req.body;
 
-  let id = req.params.id;
-  console.log(id);
   sql.connect(config,function(){
     var request = new sql.Request();
-    request.query("UPDATE buku SET judul_buku = " +judul_buku+ ", pengarang = " +pengarang+", jumlah_halaman = "+jumlah_halaman+", sinopsis = "+sinopsis+" WHERE id="+id+"", function (err, dataBuku){
-      if (err) console.log(err);
+    request.query("UPDATE buku SET judul_buku = '"+judul_buku+"', pengarang = '"+pengarang+"', jumlah_halaman = '"+jumlah_halaman+"', sinopsis = '"+sinopsis+"' WHERE id="+id+";", function (err, dataBuku){
       res.redirect('/buku');
     })
   })
+});
+
+app.post('/update-bukua/', (req,res)=>{
+  let {
+    no_karyawan,
+    nama_karyawan,
+    nomor_handphone,
+    tanggal_rekrut,
+    jenis_kelamin,
+    alamat,
+    status
+  } = req.body;
+  let sql = "UPDATE karyawan SET nama_karyawan = '"+ nama_karyawan +"', nomor_handphone = '"+ nomor_handphone +"', tanggal_rekrut = '"+ tanggal_rekrut.toLocaleString().split(",")[0] +"', jenis_kelamin = '"+ jenis_kelamin +"', alamat = '"+ alamat +"', status = '"+ status +"' WHERE no_karyawan= '"+ no_karyawan +"';";
+  let query = conn.query(sql,(err, results) => {
+    if(err) throw err;
+    res.redirect('/karyawan');
+  });
 });
 
 app.get('/delete-buku/:id', (req,res)=>{
