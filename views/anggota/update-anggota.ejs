@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,18 +8,23 @@
     <title>Tambah Member</title>
     <link rel="stylesheet" href="css/eang.css">
 </head>
+
 <body>
     <h1>Tambah Member</h1>
     <div class="container">
         <div class="con">
             <form action="/update-anggota" method="post">
-            <p class="nm" id="nama_lengkap">Nama</p>
-            <input type="text" class="inpn" name="nama_lengkap" value="<%= anggota.nama_lengkap %>">
-            <p class="nt" id="alamat">Alamat</p>
-            <input type="text" class="inpt" name="alamat" value="<%= anggota.alamat %>">
-            <p class="nr" id="no_hp">No Hp</p>
-            <input type="text" class="inpr" name="no_hp" value="<%= anggota.no_hp %>">
-            <button type="submit" class="tambah" value="update anggota">Tambah</button>
-        </form>
+                <% listAnggota.forEach((item,index)=>{ %>
+                <p class="nm" id="nama_lengkap">Nama</p>
+                <input type="text" class="inpn" name="nama_lengkap" value="<%= item.nama_lengkap %>">
+                <p class="nt" id="alamat">Alamat</p>
+                <input type="text" class="inpt" name="alamat" value="<%= item.alamat %>">
+                <p class="nr" id="no_hp">No Hp</p>
+                <input type="text" class="inpr" name="no_hp" value="<%= item.no_hp %>">
+                <input type="text" class="inpr" name="id" value="<%= item.id %>" hidden>
+                <button type="submit" class="tambah" value="update anggota">Tambah</button>
+                <%}) %>
+            </form>
 </body>
+
 </html>

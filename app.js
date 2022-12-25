@@ -169,23 +169,6 @@ app.post("/update-buku/", function(req, res){
   })
 });
 
-app.post('/update-bukua/', (req,res)=>{
-  let {
-    no_karyawan,
-    nama_karyawan,
-    nomor_handphone,
-    tanggal_rekrut,
-    jenis_kelamin,
-    alamat,
-    status
-  } = req.body;
-  let sql = "UPDATE karyawan SET nama_karyawan = '"+ nama_karyawan +"', nomor_handphone = '"+ nomor_handphone +"', tanggal_rekrut = '"+ tanggal_rekrut.toLocaleString().split(",")[0] +"', jenis_kelamin = '"+ jenis_kelamin +"', alamat = '"+ alamat +"', status = '"+ status +"' WHERE no_karyawan= '"+ no_karyawan +"';";
-  let query = conn.query(sql,(err, results) => {
-    if(err) throw err;
-    res.redirect('/karyawan');
-  });
-});
-
 app.get('/delete-buku/:id', (req,res)=>{
   let id = req.params.id;
   console.log(id);
@@ -210,13 +193,46 @@ app.get('/anggota', (req,res) => {
   })
 });
 
-app.get('/update-anggota/:id', (req,res)=>{
-  let id = req.params.id;
-  console.log(id);
+app.post("/save-anggota", function(req, res){
+  let {
+    nama_lengkap,
+    alamat,
+    no_hp
+  } = req.body;
+
   sql.connect(config,function(){
     var request = new sql.Request();
-    request.query("UPDATE anggota set status_anggota = 'selesai' WHERE id="+id+"", function (err, dataAnggota){
-      res.render('anggota/update-anggota.ejs');
+    request.query(`INSERT INTO anggota (nama_lengkap, alamat, no_hp) VALUES ('${nama_lengkap}', '${alamat}', '${no_hp}')`, function (err){
+      if (err) console.log(err);
+      res.redirect('/anggota');
+    })
+  })
+});
+
+app.get('/edit-anggota/:id', (req,res)=>{
+  let id = req.params.id;
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query('select * from anggota where id= '+id+'', function (err, dataAnggota){
+      res.render('anggota/update-anggota.ejs',{
+        listAnggota: dataAnggota.recordset,
+      });
+    })
+  })
+});
+
+app.post("/update-anggota/", function(req, res){
+  let {
+    id,
+    nama_lengkap,
+    alamat,
+    no_hp
+  } = req.body;
+
+  sql.connect(config,function(){
+    var request = new sql.Request();
+    request.query("UPDATE anggota SET nama_lengkap = '"+nama_lengkap+"', alamat = '"+alamat+"', no_hp = '"+no_hp+"' WHERE id="+id+";", function (err, dataBuku){
+      res.redirect('/anggota');
     })
   })
 });
