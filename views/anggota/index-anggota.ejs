@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/ang.css">
+</head>
+<body>
+    <!--for demo wrap-->
+
+  <h1>Member Perpustakaan</h1>
+  <a class="tph" href="/create-anggota">Tambah Member</a>
+  <div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nama</th>
+          <th>Alamat</th>
+          <th>No Hp</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="tbl-content">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+        <% listAnggota.forEach((item,index)=>{ %>
+          <tr>
+          <th scope="row"><%= index+1 %></th>
+          <td><%= item.nama_lengkap %></td>
+          <td><%= item.alamat %></td>
+          <td><%= item.no_hp %></td>
+          <td>
+            <a class="edit" href="/update-anggota/<%= item.id %>" data-id="<%= item.id %>">Edit</a>
+            <a class="hapus" href="/delete-anggota/<%= item.id %>" data-id="<%= item.id %>">Delete</a>
+        </td>
+        </tr>
+      </tbody>
+      <%}) %>
+    </table>
+  </div>
+</section>
+</body>
+</html>
