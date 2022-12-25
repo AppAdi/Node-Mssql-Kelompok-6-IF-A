@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../css/index.css">
+  <title>MSSQL</title>
+</head>
+<body>
+  <h1>Edit Buku</h1>
+  <button class="btn-home"><a href="/buku">Home</a></button>
+  <form action="/update-buku/:id" method="post">
+    <% listBuku.forEach((item,index)=>{ %>
+    <label for="judul_buku">Judul Buku : </label>
+    <input type="text" id="judul_buku" name="judul_buku" placeholder="Masukkan Judul Buku" value="<%= item.judul_buku %>">
+    <label for="pengarang">Penulis Buku : </label>
+    <input type="text" id="pengarang" name="pengarang" placeholder="Masukkan Penulis Buku" value="<%= item.pengarang %>">
+    <label for="jumlah_halaman">Jumlah Halaman : </label>
+    <input type="text" id="jumlah_halaman" name="jumlah_halaman" placeholder="Masukkan Jumlah Halaman Buku" value= "<%= item.jumlah_halaman %>"">
+    <label for="sinopsisi">Sinopsis Buku : </label>
+    <textarea id="sinopsis" name="sinopsis" placeholder="Masukkan Sinopsis Buku"><%= item.sinopsis %></textarea>
+    <button type="submit" class="btn-tambah">Update</button>
+    <%}) %>
+  </form>
+  
+
+</body>
+</html>
